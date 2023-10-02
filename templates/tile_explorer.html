@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    class MyScene extends Phaser.Scene {
+    preload() {
+        this.load.image('tiles', 'assets/super-mario.png');
+    }
+
+    create() {
+        // Display the entire tileset image
+        this.add.image(0, 0, 'tiles').setOrigin(0, 0);
+
+        // Assuming each tile is 32x32 pixels
+        const tileWidth = 16;
+        const tileHeight = 16;
+
+        // Get the dimensions of the tileset image
+        const { width, height } = this.textures.get('tiles').getSourceImage();
+
+    // Calculate the number of tiles horizontally and vertically
+    const tilesX = width / tileWidth;
+    const tilesY = height / tileHeight;
+
+    // Draw grid lines and display tile numbers
+    const graphics = this.add.graphics({ lineStyle: { width: 1, color: 0x00F9FF } });
+    let tileNumber = 0;
+    for (let y = 0; y < tilesY; y++) {
+        for (let x = 0; x < tilesX; x++) {
+            // Draw grid lines
+            if (x === 0) {
+                graphics.lineBetween(0, y * tileHeight, width, y * tileHeight);
+            }
+            graphics.lineBetween(x * tileWidth, 0, x * tileWidth, height);
+
+            // Display tile number
+            this.add.text(x * tileWidth + 1, y * tileHeight + 1, String(tileNumber), { fontSize: '8px', color: '#00F9FF' });
+
+            tileNumber++;
+        }
+    }
+    graphics.lineBetween(0, height, width, height);  // bottom boundary
+    }
+}
+
+const config = {
+    type: Phaser.AUTO,
+    width: 11 * 16, // Adjust as needed
+    height: 16 * 4, // Adjust as needed
+    scene: MyScene,
+    zoom: 4,
+};
+
+const game = new Phaser.Game(config);
+
+
+</script>
+
+</body>
+</html>
