@@ -18,6 +18,8 @@
     preload ()
     {
         this.load.image('mario-tiles', 'assets/super-mario.png');
+        this.load.tilemapCSV('map', 'assets/level.csv');
+
     }
 
     create ()
@@ -41,7 +43,8 @@
 <!--        ];-->
 
         // When loading from an array, make sure to specify the tileWidth and tileHeight
-        const map = this.make.tilemap({ data: level, tileWidth: 16, tileHeight: 16 });
+        // const map = this.make.tilemap({ data: level, tileWidth: 16, tileHeight: 16 });
+        const map = this.add.tilemap('map', 16, 16);
         const tiles = map.addTilesetImage('mario-tiles');
         const layer = map.createLayer(0, tiles, 0, 0);
     }
