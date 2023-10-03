@@ -53,20 +53,27 @@
 
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'playerTexture');
+                player.body.bounce.set(0);
+
                 player.setCollideWorldBounds(true);
-                player.setBounce(0.2);
+
+                // player.setBounce(0.2);
 
                 cursors = this.input.keyboard.createCursorKeys();
 
             }
 
             update() {
+
+                player.setVelocity(0);
                 if (cursors.left.isDown) {
                     player.setVelocityX(-160);
                 } else if (cursors.right.isDown) {
                     player.setVelocityX(160);
-                } else {
-                    player.setVelocityX(0);
+                } else if (cursors.up.isDown) {
+                    player.setVelocityY(-160);
+                } else if (cursors.down.isDown) {
+                    player.setVelocityY(160);
                 }
             }
 
@@ -81,13 +88,13 @@
             pixelArt: true,
             scene: Example,
             scale: {
-                mode: Phaser.Scale.FIT, // Fit to screen while maintaining the aspect ratio
-                autoCenter: Phaser.Scale.CENTER_BOTH, // Center the game canvas
+                // mode: Phaser.Scale.FIT,
+                // autoCenter: Phaser.Scale.CENTER_BOTH,
             },
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { y: 0 }, // No gravity in this example
+                    gravity: { y: 0}, // No gravity in this example
                     debug: true // Set it to true if you want to visualize the collision boundaries
                 }
             }
