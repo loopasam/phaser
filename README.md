@@ -11,3 +11,4 @@
 # Flask
 
 flask --app game run --debug
+
