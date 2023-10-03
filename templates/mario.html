@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>Making your first Phaser 3 Game - Part 10</title>
@@ -10,96 +11,95 @@
         }
     </style>
 </head>
+
 <body>
 
-<script type="text/javascript">
-    class Example extends Phaser.Scene
-{
-    preload ()
-    {
-        this.load.image('mario-tiles', 'assets/super-mario.png');
-        this.load.tilemapCSV('map', 'assets/level.csv');
-    }
+    <script type="text/javascript">
+        class Example extends Phaser.Scene {
+            preload() {
+                this.load.image('mario-tiles', 'assets/super-mario.png');
+                this.load.tilemapCSV('map', 'assets/level.csv');
+            }
 
-    create ()
-    {
+            create() {
 
-        const map = this.add.tilemap('map', 16, 16);
-        const tiles = map.addTilesetImage('mario-tiles');
-        const layer = map.createLayer(0, tiles, 0, 0);
+                const map = this.add.tilemap('map', 16, 16);
+                const tiles = map.addTilesetImage('mario-tiles');
+                const layer = map.createLayer(0, tiles, 0, 0);
 
 
-        console.log(this.textures.get('mario-tiles').getSourceImage());
+                console.log(this.textures.get('mario-tiles').getSourceImage());
 
-        // Coordinates to extract the tile (assuming 32x32 tiles)
-        const tileX = 0 * 16;
-        const tileY = 1 * 16;
-        const tileSize = 16;
+                // Coordinates to extract the tile (assuming 32x32 tiles)
+                const tileX = 0 * 16;
+                const tileY = 1 * 16;
+                const tileSize = 16;
 
-        // Creating a canvas texture
-        const playerTexture = this.textures.createCanvas('playerTexture', tileSize, tileSize);
+                // Creating a canvas texture
+                const playerTexture = this.textures.createCanvas('playerTexture', tileSize, tileSize);
 
-        // Obtaining the source image
-        const sourceImage = this.textures.get('mario-tiles').getSourceImage();
+                // Obtaining the source image
+                const sourceImage = this.textures.get('mario-tiles').getSourceImage();
 
-        // Drawing the tile onto the canvas texture
-        // Here, context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) is used
-        playerTexture.context.drawImage(
-            sourceImage, // source image
-            tileX, tileY, tileSize, tileSize, // source coordinates and size
-            0, 0, tileSize, tileSize // destination coordinates and size
-        );
+                // Drawing the tile onto the canvas texture
+                // Here, context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) is used
+                playerTexture.context.drawImage(
+                    sourceImage, // source image
+                    tileX, tileY, tileSize, tileSize, // source coordinates and size
+                    0, 0, tileSize, tileSize // destination coordinates and size
+                );
 
-        playerTexture.refresh();
+                playerTexture.refresh();
 
-        // Create the player sprite
-        player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'playerTexture');
-        player.setCollideWorldBounds(true);
-        player.setBounce(0.2);
+                // Create the player sprite
+                player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'playerTexture');
+                player.setCollideWorldBounds(true);
+                player.setBounce(0.2);
 
-        cursors = this.input.keyboard.createCursorKeys();
+                cursors = this.input.keyboard.createCursorKeys();
 
-    }
+            }
 
-    update() {
-        if (cursors.left.isDown) {
-            player.setVelocityX(-160);
-        } else if (cursors.right.isDown) {
-            player.setVelocityX(160);
-        } else {
-            player.setVelocityX(0);
+            update() {
+                if (cursors.left.isDown) {
+                    player.setVelocityX(-160);
+                } else if (cursors.right.isDown) {
+                    player.setVelocityX(160);
+                } else {
+                    player.setVelocityX(0);
+                }
+            }
+
         }
-    }
 
-}
+        const config = {
+            type: Phaser.AUTO,
+            width: 6 * 16, // Number of tiles * size of the tile
+            height: 6 * 16,
+            zoom: 2,
+            parent: 'phaser-example',
+            pixelArt: true,
+            scene: Example,
+            scale: {
+                mode: Phaser.Scale.FIT, // Fit to screen while maintaining the aspect ratio
+                autoCenter: Phaser.Scale.CENTER_BOTH, // Center the game canvas
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 }, // No gravity in this example
+                    debug: true // Set it to true if you want to visualize the collision boundaries
+                }
+            }
+        };
 
-const config = {
-    type: Phaser.AUTO,
-    width: 6 * 16, // Number of tiles * size of the tile
-    height: 6 * 16,
-    zoom: 2,
-    parent: 'phaser-example',
-    pixelArt: true,
-    scene: Example,
-    scale: {
-    mode: Phaser.Scale.FIT, // Fit to screen while maintaining the aspect ratio
-    autoCenter: Phaser.Scale.CENTER_BOTH, // Center the game canvas
-    },
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 }, // No gravity in this example
-            debug: true // Set it to true if you want to visualize the collision boundaries
-        }
-    }
-};
-
-var cursors;
-var player;
-const game = new Phaser.Game(config);
+        var cursors;
+        var player;
+        const game = new Phaser.Game(config);
 
 
-</script>
+    </script>
 
 </body>
+
 </html>
