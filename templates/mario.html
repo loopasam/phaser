@@ -17,7 +17,8 @@
     <script type="text/javascript">
         class Example extends Phaser.Scene {
             preload() {
-                this.load.image('mario-tiles', 'assets/super-mario.png');
+                // this.load.image('mario-tiles', 'assets/super-mario.png');
+                this.load.image('mario-tiles', 'assets/Grass.png');
                 this.load.tilemapCSV('map', 'assets/level.csv');
             }
 
@@ -26,6 +27,7 @@
                 const map = this.add.tilemap('map', 16, 16);
                 const tiles = map.addTilesetImage('mario-tiles');
                 const layer = map.createLayer(0, tiles, 0, 0);
+                layer.setCollision([23]);
 
 
                 console.log(this.textures.get('mario-tiles').getSourceImage());
@@ -53,11 +55,9 @@
 
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'playerTexture');
-                player.body.bounce.set(0);
-
                 player.setCollideWorldBounds(true);
 
-                // player.setBounce(0.2);
+                this.physics.add.collider(player, layer);
 
                 cursors = this.input.keyboard.createCursorKeys();
 
@@ -65,7 +65,6 @@
 
             update() {
 
-                player.setVelocity(0);
                 if (cursors.left.isDown) {
                     player.setVelocityX(-160);
                 } else if (cursors.right.isDown) {
@@ -74,6 +73,8 @@
                     player.setVelocityY(-160);
                 } else if (cursors.down.isDown) {
                     player.setVelocityY(160);
+                } else {
+                    player.setVelocity(0);
                 }
             }
 
@@ -88,8 +89,8 @@
             pixelArt: true,
             scene: Example,
             scale: {
-                // mode: Phaser.Scale.FIT,
-                // autoCenter: Phaser.Scale.CENTER_BOTH,
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
             },
             physics: {
                 default: 'arcade',
