@@ -38,6 +38,90 @@
 
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
+
+                const anims_speed = 5;
+
+                this.anims.create({
+                    key: 'walk-left',
+                    frames: [
+                        { key: 'player', frame: 91 },
+                        { key: 'player', frame: 94 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'idle-left',
+                    frames: [
+                        { key: 'player', frame: 85 },
+                        { key: 'player', frame: 88 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'walk-right',
+                    frames: [
+                        { key: 'player', frame: 127 },
+                        { key: 'player', frame: 130 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'idle-right',
+                    frames: [
+                        { key: 'player', frame: 121 },
+                        { key: 'player', frame: 124 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+
+                this.anims.create({
+                    key: 'walk-up',
+                    frames: [
+                        { key: 'player', frame: 55 },
+                        { key: 'player', frame: 58 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'idle-up',
+                    frames: [
+                        { key: 'player', frame: 49 },
+                        { key: 'player', frame: 52 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'walk-down',
+                    frames: [
+                        { key: 'player', frame: 19 },
+                        { key: 'player', frame: 22 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'idle-down',
+                    frames: [
+                        { key: 'player', frame: 13 },
+                        { key: 'player', frame: 16 }
+                    ],
+                    frameRate: anims_speed,
+                    repeat: -1
+                });
+
                 player.setCollideWorldBounds(true);
 
                 this.physics.add.collider(player, layer);
@@ -50,14 +134,32 @@
 
                 if (cursors.left.isDown) {
                     player.setVelocityX(-160);
+                    player.anims.play('walk-left', true);
+                    direction = 'left';
                 } else if (cursors.right.isDown) {
                     player.setVelocityX(160);
+                    player.anims.play('walk-right', true);
+                    direction = 'right';
                 } else if (cursors.up.isDown) {
                     player.setVelocityY(-160);
+                    player.anims.play('walk-up', true);
+                    direction = 'up';
                 } else if (cursors.down.isDown) {
                     player.setVelocityY(160);
+                    player.anims.play('walk-down', true);
+                    direction = 'down';
                 } else {
                     player.setVelocity(0);
+                    // check with direction was used last and play the idle version of it
+                    if (direction === 'left') {
+                        player.anims.play('idle-left', true);
+                    } else if (direction === 'right') {
+                        player.anims.play('idle-right', true);
+                    } else if (direction === 'up') {
+                        player.anims.play('idle-up', true);
+                    } else if (direction === 'down') {
+                        player.anims.play('idle-down', true);
+                    }
                 }
             }
 
@@ -86,6 +188,7 @@
 
         var cursors;
         var player;
+        var direction = 'down';
         const game = new Phaser.Game(config);
 
 

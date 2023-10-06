@@ -16,7 +16,8 @@
 
     class MyScene extends Phaser.Scene {
     preload() {
-        this.load.image('tiles', 'assets/Grass.png');
+        // this.load.image('tiles', 'assets/Grass.png');
+        this.load.image('tiles', 'assets/Cat.png');
     }
 
     create() {
@@ -24,8 +25,9 @@
         this.add.image(0, 0, 'tiles').setOrigin(0, 0);
 
         // Assuming each tile is 32x32 pixels
-        const tileWidth = 16;
-        const tileHeight = 16;
+        const dims = 16;
+        const tileWidth = dims;
+        const tileHeight = dims;
 
         // Get the dimensions of the tileset image
         const { width, height } = this.textures.get('tiles').getSourceImage();
@@ -58,8 +60,8 @@
 
 const config = {
     type: Phaser.AUTO,
-    width: 11 * 10, // Adjust as needed
-    height: 16 * 8, // Adjust as needed
+    width: 16 * 12, // Adjust as needed
+    height: 16 * 12, // Adjust as needed
     scene: MyScene,
     zoom: 4,
 };
