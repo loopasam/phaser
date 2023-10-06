@@ -16,7 +16,7 @@
 
     class MyScene extends Phaser.Scene {
     preload() {
-        this.load.image('tiles', 'assets/super-mario.png');
+        this.load.image('tiles', 'assets/Grass.png');
     }
 
     create() {
@@ -58,8 +58,8 @@
 
 const config = {
     type: Phaser.AUTO,
-    width: 11 * 16, // Adjust as needed
-    height: 16 * 4, // Adjust as needed
+    width: 11 * 10, // Adjust as needed
+    height: 16 * 8, // Adjust as needed
     scene: MyScene,
     zoom: 4,
 };

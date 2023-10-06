@@ -12,49 +12,32 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #008000;">
 
     <script type="text/javascript">
         class Example extends Phaser.Scene {
             preload() {
-                // this.load.image('mario-tiles', 'assets/super-mario.png');
-                this.load.image('mario-tiles', 'assets/Grass.png');
+                this.load.image('grass-tiles', 'assets/Grass.png');
+                this.load.spritesheet('player', 'assets/cat.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.tilemapCSV('map', 'assets/level.csv');
+                
             }
 
             create() {
 
                 const map = this.add.tilemap('map', 16, 16);
-                const tiles = map.addTilesetImage('mario-tiles');
+
+                const tiles = map.addTilesetImage('grass-tiles');
+
+                this.cameras.main.setBackgroundColor('#008000');
+
+
                 const layer = map.createLayer(0, tiles, 0, 0);
-                layer.setCollision([23]);
+                layer.setCollision([30, 61, 64, 65, 74, 75]);
 
-
-                console.log(this.textures.get('mario-tiles').getSourceImage());
-
-                // Coordinates to extract the tile (assuming 32x32 tiles)
-                const tileX = 0 * 16;
-                const tileY = 1 * 16;
-                const tileSize = 16;
-
-                // Creating a canvas texture
-                const playerTexture = this.textures.createCanvas('playerTexture', tileSize, tileSize);
-
-                // Obtaining the source image
-                const sourceImage = this.textures.get('mario-tiles').getSourceImage();
-
-                // Drawing the tile onto the canvas texture
-                // Here, context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) is used
-                playerTexture.context.drawImage(
-                    sourceImage, // source image
-                    tileX, tileY, tileSize, tileSize, // source coordinates and size
-                    0, 0, tileSize, tileSize // destination coordinates and size
-                );
-
-                playerTexture.refresh();
 
                 // Create the player sprite
-                player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'playerTexture');
+                player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
                 player.setCollideWorldBounds(true);
 
                 this.physics.add.collider(player, layer);
@@ -82,9 +65,9 @@
 
         const config = {
             type: Phaser.AUTO,
-            width: 6 * 16, // Number of tiles * size of the tile
-            height: 6 * 16,
-            zoom: 2,
+            width: 14 * 16, // Number of tiles * size of the tile
+            height: 10 * 16,
+            zoom: 1,
             parent: 'phaser-example',
             pixelArt: true,
             scene: Example,
