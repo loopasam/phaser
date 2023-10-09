@@ -20,7 +20,7 @@
                 this.load.image('grass-tiles', 'assets/Grass.png');
                 this.load.spritesheet('player', 'assets/cat.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.tilemapCSV('map', 'assets/level.csv');
-                
+
             }
 
             create() {
@@ -35,27 +35,19 @@
                 const layer = map.createLayer(0, tiles, 0, 0);
                 layer.setCollision([30, 61, 64, 65, 74, 75]);
 
-
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
 
-                // Create the projectile group
-                const projectiles = this.physics.add.group();
-                // Create a new graphics object
                 const graphics = this.add.graphics();
+                const projectiles = this.physics.add.group();
 
-                // Draw a rectangle shape
-                graphics.fillStyle(0xffffff, 1);
-                graphics.fillRect(0, 0, 2, 2);
-
-                // Create a new texture from the graphics object
-                const texture = graphics.generateTexture();
-
-
-                // Listen for the space bar key press
                 this.input.keyboard.on('keydown-SPACE', function () {
-                    // Create a new projectile sprite
-                    const projectile = projectiles.create(player.x, player.y, texture);
+
+                    graphics.fillStyle(0xffffff, 1);
+                    graphics.fillRect(0, 0, 8, 8);
+                    const texture = graphics.generateTexture();
+                    
+                    const projectile = projectiles.create(45, 45, texture);
                     projectile.setVelocityX(50);
                 });
 
@@ -201,7 +193,7 @@
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { y: 0}, // No gravity in this example
+                    gravity: { y: 0 }, // No gravity in this example
                     debug: true // Set it to true if you want to visualize the collision boundaries
                 }
             }
