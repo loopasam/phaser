@@ -39,6 +39,27 @@
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
 
+                // Create the projectile group
+                const projectiles = this.physics.add.group();
+                // Create a new graphics object
+                const graphics = this.add.graphics();
+
+                // Draw a rectangle shape
+                graphics.fillStyle(0xffffff, 1);
+                graphics.fillRect(0, 0, 2, 2);
+
+                // Create a new texture from the graphics object
+                const texture = graphics.generateTexture();
+
+
+                // Listen for the space bar key press
+                this.input.keyboard.on('keydown-SPACE', function () {
+                    // Create a new projectile sprite
+                    const projectile = projectiles.create(player.x, player.y, texture);
+                    projectile.setVelocityX(50);
+                });
+
+
                 const anims_speed = 5;
 
                 this.anims.create({
