@@ -38,18 +38,28 @@
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
 
-                const graphics = this.add.graphics();
-                const projectiles = this.physics.add.group();
 
-                this.input.keyboard.on('keydown-SPACE', function () {
+                
+    // Draw a square using the Graphics object
+    var graphics = this.add.graphics({ fillStyle: { color: 0x0000ff } });
+    graphics.fillRect(0, 0, 50, 50);
 
-                    graphics.fillStyle(0xffffff, 1);
-                    graphics.fillRect(0, 0, 8, 8);
-                    const texture = graphics.generateTexture();
-                    
-                    const projectile = projectiles.create(45, 45, texture);
-                    projectile.setVelocityX(50);
-                });
+    // Save the drawn square as a texture
+    graphics.generateTexture('dynamicSquareTexture', 50, 50);
+    
+    // Get the texture directly
+    let dynamicTexture = this.textures.get('dynamicSquareTexture').getSourceImage();
+
+    // Creating a physics group
+    var squareGroup = this.physics.add.group({
+        setXY: { x: 100, y: 100, stepX: 60 },
+        velocityX: 100
+    });
+    
+    // Create a sprite using the texture directly
+    let sprite = this.physics.add.sprite(50, 50, dynamicTexture);
+    squareGroup.add(sprite); // Adding the sprite to the group
+
 
 
                 const anims_speed = 5;
