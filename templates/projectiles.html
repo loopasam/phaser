@@ -54,8 +54,15 @@
                 }
 
                 if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-                    const bullet = this.bullets.create(this.player.x, this.player.y, 'bullet');
-                    bullet.setVelocity(0, -500);
+                    // const bullet = this.bullets.create(this.player.x, this.player.y, 'bullet');
+                    // bullet.setVelocity(0, -500);
+                    const bullet = this.add.rectangle(this.player.x, this.player.y, 10, 20, 0xff0000);
+    this.bullets.add(bullet);
+    bullet.body.setVelocity(0, -50); // Increase the velocity to 500 pixels per second
+    bullet.body.setCollideWorldBounds(true); // Set the bullet's physics settings explicitly
+    bullet.body.onWorldBounds = true;
+
+
                 }
             }
         } 

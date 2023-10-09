@@ -10,6 +10,10 @@ def mario():
 def projectile():
     return render_template('projectiles.html')
 
+@app.route("/rect")
+def rect():
+    return render_template('rect.html')
+
 @app.route("/tile_explorer")
 def tile_explorer():
     return render_template('tile_explorer.html')
