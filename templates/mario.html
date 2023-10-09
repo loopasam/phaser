@@ -20,6 +20,7 @@
                 this.load.image('grass-tiles', 'assets/Grass.png');
                 this.load.spritesheet('player', 'assets/cat.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.tilemapCSV('map', 'assets/level.csv');
+                this.load.image('bullet', 'assets/bullet_green.png');
 
             }
 
@@ -38,28 +39,11 @@
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
 
+                // create the code to create a projectile group
+                this.bullets = this.physics.add.group();
 
-                
-    // Draw a square using the Graphics object
-    var graphics = this.add.graphics({ fillStyle: { color: 0x0000ff } });
-    graphics.fillRect(0, 0, 50, 50);
-
-    // Save the drawn square as a texture
-    graphics.generateTexture('dynamicSquareTexture', 50, 50);
-    
-    // Get the texture directly
-    let dynamicTexture = this.textures.get('dynamicSquareTexture').getSourceImage();
-
-    // Creating a physics group
-    var squareGroup = this.physics.add.group({
-        setXY: { x: 100, y: 100, stepX: 60 },
-        velocityX: 100
-    });
-    
-    // Create a sprite using the texture directly
-    let sprite = this.physics.add.sprite(50, 50, dynamicTexture);
-    squareGroup.add(sprite); // Adding the sprite to the group
-
+                // create the code to trigger the projectile
+                this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 
                 const anims_speed = 5;
@@ -184,6 +168,15 @@
                         player.anims.play('idle-down', true);
                     }
                 }
+
+                if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+                    const bullet = this.bullets.create(player.x, player.y, 'bullet');
+                    bullet.setVelocity(0, -50);
+
+
+                }
+
+
             }
 
         }
