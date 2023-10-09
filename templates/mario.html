@@ -19,9 +19,8 @@
             preload() {
                 this.load.image('grass-tiles', 'assets/Grass.png');
                 this.load.spritesheet('player', 'assets/cat.png', { frameWidth: 16, frameHeight: 16 });
+                this.load.spritesheet('chicken', 'assets/chicken.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.tilemapCSV('map', 'assets/level.csv');
-                this.load.image('bullet', 'assets/bullet_green.png');
-
             }
 
             create() {
@@ -32,18 +31,12 @@
 
                 this.cameras.main.setBackgroundColor('#008000');
 
-
                 const layer = map.createLayer(0, tiles, 0, 0);
                 layer.setCollision([30, 61, 64, 65, 74, 75]);
 
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
-
-                // create the code to create a projectile group
-                this.bullets = this.physics.add.group();
-
-                // create the code to trigger the projectile
-                this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+                player.setBounce(0.8);
 
 
                 const anims_speed = 5;
@@ -133,6 +126,37 @@
 
                 this.physics.add.collider(player, layer);
 
+                const chickens = this.physics.add.group({
+                    bounceX: 0.8,
+                    bounceY: 0.8,
+                    collideWorldBounds: true
+                });
+                this.physics.add.collider(chickens, player);
+                this.physics.add.collider(chickens, layer);
+                this.physics.add.collider(chickens, chickens);
+
+                this.anims.create({
+                        key: 'chicken-idle',
+                        frames: [
+                            { key: 'chicken', frame: 0 },
+                            { key: 'chicken', frame: 1 }
+                        ],
+                        frameRate: 10,
+                        repeat: -1
+                    });
+
+
+                // Create 10 chicken sprites
+                for (let i = 0; i < 10; i++) {
+                    const randomheight = Math.floor(Math.random() * 100) + 32;
+                    const chicken = chickens.create(16 * i + 24, randomheight - 8, 'chicken');
+
+                    chicken.setOrigin(0.5, 0.5);
+                    chicken.setVelocity(Math.random() * 100 + 100, Math.random() * 100 + 100);
+
+                }
+
+
                 cursors = this.input.keyboard.createCursorKeys();
 
             }
@@ -168,14 +192,6 @@
                         player.anims.play('idle-down', true);
                     }
                 }
-
-                if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-                    const bullet = this.bullets.create(player.x, player.y, 'bullet');
-                    bullet.setVelocity(0, -50);
-
-
-                }
-
 
             }
 

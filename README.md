@@ -1,6 +1,5 @@
 # phaser
 
-- player animation movement
 - npc cow
 - audio loop transition
 - collectable items
