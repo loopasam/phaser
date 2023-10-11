@@ -21,6 +21,9 @@
                 this.load.spritesheet('player', 'assets/cat.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.spritesheet('chicken', 'assets/chicken.png', { frameWidth: 16, frameHeight: 16 });
                 this.load.tilemapCSV('map', 'assets/level.csv');
+                this.load.audio('loop5', 'assets/loop5.mp3');
+                this.load.audio('loop6', 'assets/loop6.mp3');
+                this.load.audio('hit', 'assets/bump.wav');
             }
 
             create() {
@@ -33,6 +36,9 @@
                 layer.setCollision([30, 61, 64, 65, 74, 75]);
 
                 this.physics.world.setBounds(0, 0, 992, 896);
+                // Play the first loop
+                currentLoop = this.sound.add('loop5');
+                hitSound = this.sound.add('hit');
 
 
                 // Create the player sprite
@@ -137,7 +143,14 @@
                     bounceY: 0.8,
                     collideWorldBounds: true
                 });
-                this.physics.add.collider(chickens, player);
+                var that = this;
+                this.physics.add.collider(player, chickens, function (player, chicken) {
+                    // Play the sound effect
+                    hitSound.play();
+
+                    // Remove the chicken from the scene
+                    chicken.destroy();
+                });             
                 this.physics.add.collider(chickens, layer);
                 this.physics.add.collider(chickens, chickens);
 
@@ -170,6 +183,15 @@
             }
 
             update() {
+                // if (currentLoop.seek <= 0) {
+                //     if (currentLoop.key === 'loop5'){
+                //         currentLoop = this.sound.add('loop6');
+                //     } else {
+                //         currentLoop = this.sound.add('loop5')
+                //     }
+                //     currentLoop.play();
+                // }
+
 
                 if (cursors.left.isDown) {
                     player.setVelocityX(-160);
@@ -230,6 +252,8 @@
 
         var cursors;
         var player;
+        var currentLoop;
+        var hitSound;
         var direction = 'down';
         const game = new Phaser.Game(config);
 

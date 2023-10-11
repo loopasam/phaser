@@ -1,7 +1,5 @@
 # phaser
 
-- audio loop transition
-- collectable items
 - scene transitions
 
 # Flask
