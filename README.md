@@ -2,9 +2,8 @@
 
 - audio loop transition
 - collectable items
-- camera and tilemap
+- scene transitions
 
 # Flask
 
 flask --app game run --debug
-

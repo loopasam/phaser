@@ -29,14 +29,20 @@
 
                 const tiles = map.addTilesetImage('grass-tiles');
 
-                this.cameras.main.setBackgroundColor('#008000');
-
                 const layer = map.createLayer(0, tiles, 0, 0);
                 layer.setCollision([30, 61, 64, 65, 74, 75]);
+
+                this.physics.world.setBounds(0, 0, 992, 896);
+
 
                 // Create the player sprite
                 player = this.physics.add.sprite(6 * 16 / 2, 6 * 16 / 2, 'player');
                 player.setBounce(0.8);
+                const camera = this.cameras.main;
+                camera.setBackgroundColor('#008000');
+                camera.startFollow(player);
+                camera.setBounds(0, 0, 992, 896);
+                camera.setZoom(3);
 
 
                 const anims_speed = 5;
@@ -152,6 +158,8 @@
                     const chicken = chickens.create(16 * i + 24, randomheight - 8, 'chicken');
 
                     chicken.setOrigin(0.5, 0.5);
+                    // chicken.setMass(100);
+                    chicken.anims.play('chicken-idle', true);
                     chicken.setVelocity(Math.random() * 100 + 100, Math.random() * 100 + 100);
 
                 }
@@ -199,9 +207,11 @@
 
         const config = {
             type: Phaser.AUTO,
-            width: 14 * 16, // Number of tiles * size of the tile
-            height: 10 * 16,
-            zoom: 1,
+            // width: 14 * 16,
+            // height: 10 * 16,
+            // use the with of the window
+            width: 800,
+            height: 600,
             parent: 'phaser-example',
             pixelArt: true,
             scene: Example,
