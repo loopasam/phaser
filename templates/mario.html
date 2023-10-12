@@ -183,14 +183,14 @@
             }
 
             update() {
-                // if (currentLoop.seek <= 0) {
-                //     if (currentLoop.key === 'loop5'){
-                //         currentLoop = this.sound.add('loop6');
-                //     } else {
-                //         currentLoop = this.sound.add('loop5')
-                //     }
-                //     currentLoop.play();
-                // }
+                if (currentLoop.seek <= 0) {
+                    if (currentLoop.key === 'loop5'){
+                        currentLoop = this.sound.add('loop6');
+                    } else {
+                        currentLoop = this.sound.add('loop5')
+                    }
+                    currentLoop.play();
+                }
 
 
                 if (cursors.left.isDown) {
